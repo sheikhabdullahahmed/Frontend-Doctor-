@@ -212,38 +212,48 @@ function Profile() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
       {/* Header */}
       <div className="bg-white border-b border-gray-100 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="bg-indigo-600 rounded-xl p-2">
-                <Activity className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h1 className="text-xl font-bold text-gray-800">Doctor Dashboard</h1>
-                <p className="text-sm text-gray-500">Manage your profile and appointments</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <button
-                onClick={() => setShowCaseForm(true)}
-                className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all font-medium"
-              >
-                <Plus className="w-4 h-4" />
-                Add Case Record
-              </button>
-              <div className="flex items-center gap-3">
-                <div className="text-right">
-                  <p className="text-sm text-gray-500">Welcome back,</p>
-                  <p className="font-semibold text-gray-800">{doctor.name}</p>
-                </div>
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center text-white font-semibold">
-                  {doctor.name?.charAt(0)}
-                </div>
-              </div>
-            </div>
+  <div className="max-w-7xl mx-auto px-6 py-4">
+    <div className="flex items-center justify-between">
+      {/* Left Side */}
+      <div className="flex items-center gap-3">
+        <div className="bg-indigo-600 rounded-xl p-2">
+          <Activity className="w-6 h-6 text-white" />
+        </div>
+        <div>
+          <h1 className="text-xl font-bold text-gray-800">Doctor Dashboard</h1>
+          <p className="text-sm text-gray-500 hidden sm:block">
+            Manage your profile and appointments
+          </p>
+        </div>
+      </div>
+
+      {/* Right Side */}
+      <div className="flex items-center gap-4">
+        {/* Add Case Button — Always Visible */}
+        <button
+          onClick={() => setShowCaseForm(true)}
+          className="flex items-center gap-2 px-2 py-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all font-medium"
+        >
+          <Plus className="w-4 h-6 " />
+          Add Case Record
+        </button>
+
+        {/* Doctor Info — Hidden on Small Screens */}
+        <div className="hidden sm:flex items-center gap-3">
+          <div className="text-right">
+            <p className="text-sm text-gray-500">Welcome back,</p>
+            <p className="font-semibold text-gray-800">{doctor.name}</p>
+          </div>
+          <div 
+          className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center text-white font-semibold">
+            {doctor.name?.charAt(0)}
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
 
       {/* Case Form Modal */}
       {showCaseForm && (
@@ -412,7 +422,7 @@ function Profile() {
                     <User className="w-5 h-5 text-gray-400" />
                     <div>
                       <p className="text-xs text-gray-500">Full Name</p>
-                      <p className="font-semibold text-gray-800">{doctor.name}</p>
+                      <p className="font-semibold text-gray-800">Dr {doctor.name}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">

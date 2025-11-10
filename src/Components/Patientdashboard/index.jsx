@@ -16,6 +16,7 @@ import {
 import { useEffect } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 
 
@@ -136,7 +137,7 @@ fetchAppointments(profile?.profile?._id)
       navigate("/");
     }, 1500);
 
-    console.log("Logged out and cookie cleared");
+    // console.log("Logged out and cookie cleared");
 
   } catch (err) {
     console.error("Error clearing cookie:", err);
@@ -385,36 +386,61 @@ fetchAppointments(profile?.profile?._id)
                 </div>
 
                 {/* Date */}
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Appointment Date
-                  </label>
-                  <div className="relative">
-                    <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                    <input
-                      type="date"
-                      value={date}
-                      onChange={(e) => setDate(e.target.value)}
-                      className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-gray-50 focus:bg-white transition-all"
-                    />
-                  </div>
-                </div>
+                {/* Appointment Date */}
+<div>
+  <label className="block text-sm font-semibold text-gray-700 mb-2">
+    Appointment Date
+  </label>
+  <div className="relative">
+    <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+    <input
+      type="date"
+      value={date}
+      onChange={(e) => {
+        const selectedDate = e.target.value;
+        const today = new Date().toISOString().split("T")[0]; // today yyyy-mm-dd
+        if (selectedDate < today) {
+          toast.error("You cannot select past date!");
+          setDate(""); // reset field
+        } else {
+          setDate(selectedDate);
+        }
+      }}
+      className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-gray-50 focus:bg-white transition-all"
+      required
+    />
+  </div>
+</div>
 
-                {/* Time */}
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Appointment Time
-                  </label>
-                  <div className="relative">
-                    <Clock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                    <input
-                      type="time"
-                      value={time}
-                      onChange={(e) => setTime(e.target.value)}
-                      className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-gray-50 focus:bg-white transition-all"
-                    />
-                  </div>
-                </div>
+{/* Appointment Time */}
+<div>
+  <label className="block text-sm font-semibold text-gray-700 mb-2">
+    Appointment Time
+  </label>
+  <div className="relative">
+    <Clock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+    <input
+      type="time"
+      value={time}
+      onChange={(e) => {
+        const [hours, minutes] = e.target.value.split(":");
+        const selectedTime = new Date();
+        selectedTime.setHours(hours, minutes);
+
+        const now = new Date();
+        if (date === new Date().toISOString().split("T")[0] && selectedTime < now) {
+          toast.success("Time cannot be in the past!");
+          setTime("");
+        } else {
+          setTime(e.target.value);
+        }
+      }}
+      className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-gray-50 focus:bg-white transition-all"
+      required
+    />
+  </div>
+</div>
+
 
                 {/* Description */}
                 <div>

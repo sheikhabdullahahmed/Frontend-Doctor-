@@ -4,7 +4,6 @@ import Login from "./Auth/Login";
 import Signup from "./Auth/Signup";
 import PatientDashboard from "./Components/Patientdashboard";
 import DoctorDashboard from "./Components/DoctorDashbaord";
-import Admin from "./Admin/index";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import File from './file'

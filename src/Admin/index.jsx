@@ -116,47 +116,6 @@ function AdminDashboard() {
     setNewDoctorData({ ...newDoctorData, [e.target.name]: e.target.value });
   };
 
-//   const handleCreateDoctor = async (e) => {
-//     e.preventDefault();
-    
-//     if (!newDoctorData.name || !newDoctorData.email || !newDoctorData.phone || !newDoctorData.password || !newDoctorData.specialization) {
-//       setMessage({ type: "error", text: "All fields are required!" });
-//       setTimeout(() => setMessage({ type: "", text: "" }), 3000);
-//       return;
-//     }
-
-//     try {
-//       const response = await fetch(`${BASE_URL}/doctors/register`, {
-//         method: "POST",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify(newDoctorData)
-//       });
-
-//       const data = await response.json();
-
-//       if (response.ok) {
-//         setMessage({ type: "success", text: "Doctor created successfully!" });
-//         setTimeout(() => setMessage({ type: "", text: "" }), 3000);
-        
-//         setNewDoctorData({
-//           name: "",
-//           email: "",
-//           phone: "",
-//           password: "",
-//           specialization: "",
-//         });
-//         setShowCreateDoctor(false);
-//         fetchDoctors();
-//       } else {
-//         setMessage({ type: "error", text: data.message || "Failed to create doctor" });
-//         setTimeout(() => setMessage({ type: "", text: "" }), 3000);
-//       }
-//     } catch (error) {
-//       console.error("Error creating doctor:", error);
-//       setMessage({ type: "error", text: "Failed to create doctor" });
-//       setTimeout(() => setMessage({ type: "", text: "" }), 3000);
-//     }
-//   };
 
  const handleCreateDoctor = async (e) => {
     e.preventDefault();
@@ -211,7 +170,7 @@ function AdminDashboard() {
 
    const handleLogout = async () => {
     try {
-      await axios.post("http://localhost:5000/logout", {}, { withCredentials: true });
+      await axios.post("http://localhost:5000/logout",  {}, { withCredentials: true });
       setMessage({ type: "success", text: "Logged out successfully!" });
       
       setTimeout(() => {
@@ -268,56 +227,71 @@ function AdminDashboard() {
       textColor: "text-green-600"
     },
     { 
-      title: "Pending Approvals", 
-      value: doctors.filter(d => d.status === "pending").length, 
-      icon: Clock, 
-      bgColor: "bg-orange-50",
-      textColor: "text-orange-600"
-    }
+    title: "Total Cases", 
+    value: caseRecords.length, 
+    icon: FileText, 
+    bgColor: "bg-blue-50",
+    textColor: "text-blue-600"
+  },
   ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
       {/* Header */}
       <div className="bg-white border-b border-gray-100 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="bg-indigo-600 rounded-xl p-2">
-                <Activity className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h1 className="text-xl font-bold text-gray-800">Admin Dashboard</h1>
-                <p className="text-sm text-gray-500">Manage your healthcare system</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <button
-                onClick={() => setShowCreateDoctor(!showCreateDoctor)}
-                className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all font-medium"
-              >
-                <UserPlus className="w-4 h-4" />
-                Create Doctor
-              </button>
-              <div className="flex items-center gap-3">
-                <div className="text-right">
-                  <p className="text-sm text-gray-500">Welcome back,</p>
-                  <p className="font-semibold text-gray-800">Administrator</p>
-                </div>
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center text-white font-semibold">
-                  A
-                </div>
-              </div>
-              <button
-                onClick={handleLogout}
-                className="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-600 rounded-xl hover:bg-red-100 transition-all font-medium"
-              >
-                <LogOut className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+    <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-3 sm:gap-0">
+
+      {/* Left Section */}
+      <div className="flex items-center gap-3">
+        <div className="bg-indigo-600 rounded-xl p-2">
+          <Activity className="w-6 h-6 text-white" />
+        </div>
+        <div className="text-center sm:text-left">
+          <h1 className="text-lg sm:text-xl font-bold text-gray-800">
+            Admin Dashboard
+          </h1>
+          <p className="text-xs sm:text-sm text-gray-500">
+            Manage your healthcare system
+          </p>
         </div>
       </div>
+
+      {/* Right Section */}
+      <div className="flex flex-wrap items-center justify-center sm:justify-end gap-3 sm:gap-4 w-full sm:w-auto">
+        {/* Create Doctor Button */}
+        <button
+          onClick={() => setShowCreateDoctor(!showCreateDoctor)}
+          className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all font-medium text-sm"
+        >
+          <UserPlus className="w-4 h-4" />
+          <span className="hidden xs:inline">Create Doctor</span>
+        </button>
+
+        {/* Admin Info - hidden on very small screens */}
+        <div className="hidden sm:flex items-center gap-3">
+          <div className="text-right">
+            <p className="text-xs sm:text-sm text-gray-500">Welcome back,</p>
+            <p className="font-semibold text-gray-800">Administrator</p>
+          </div>
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center text-white font-semibold">
+            A
+          </div>
+        </div>
+
+        {/* Logout Button */}
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-red-50 text-red-600 rounded-xl hover:bg-red-100 transition-all font-medium text-sm"
+        >
+          <LogOut className="w-4 h-4" />
+          <span className="hidden xs:inline">Logout</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
       {/* Create Doctor Modal */}
       {showCreateDoctor && (
@@ -421,6 +395,7 @@ function AdminDashboard() {
                   <UserPlus className="w-5 h-5" />
                   Create Doctor Account
                 </button>
+                 
               </div>
             </div>
           </div>
@@ -512,7 +487,7 @@ function AdminDashboard() {
                               {doc.name.charAt(0)}
                             </div>
                             <div>
-                              <p className="font-semibold text-gray-800">{doc.name}</p>
+                              <p className="font-semibold text-gray-800">Dr {doc.name}</p>
                               <p className="text-xs text-gray-500">{doc.specialization}</p>
                             </div>
                           </div>
