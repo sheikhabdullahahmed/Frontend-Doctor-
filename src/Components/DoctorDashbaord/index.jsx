@@ -32,6 +32,7 @@ function Profile() {
         });
         const data = await res.json();
         setDoctor(data);
+        console.log(data)
       } catch (error) {
         console.error("Error fetching doctor profile:", error);
       }
@@ -136,16 +137,17 @@ function Profile() {
       
       setShowCaseForm(false);
       setCaseForm({
-        patientId: profile?.profile?._id,
+        patientId: doctor?.profile?._id,
         diagnosis: "",
         prescription: "",
         treatment: "",
         notes: "",
       });
     } catch (err) {
+      console.log(err)
       console.error("Error adding record:", err);
       setMessage({ type: "error", text: "Error adding record" });
-      setTimeout(() => setMessage({ type: "", text: "" }), 3000);
+      // setTimeout(() => setMessage({ type: "", text: "" }), 3000);
     }
   };
 
