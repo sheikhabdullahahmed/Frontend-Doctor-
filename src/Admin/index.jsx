@@ -62,15 +62,16 @@ function AdminDashboard() {
     }
   };
 
-  const fetchCaseRecords = async () => {
+   const fetchCaseRecords = async () => {
     try {
-      const res = await fetch(`${BASE_URL}/all`);
+      const res = await fetch(`${BASE_URL}/all`, { method: "GET" });
       const data = await res.json();
       setCaseRecords(data);
     } catch (error) {
       console.error("Error fetching case records:", error);
     }
   };
+
 
   
   const deleteDoctor = async (id) => {
@@ -159,18 +160,18 @@ function AdminDashboard() {
           type: "error",
           text: data.message || "Failed to create doctor",
         });
-        setTimeout(() => setMessage({ type: "", text: "" }), 3000);
+        // setTimeout(() => setMessage({ type: "", text: "" }), 3000);
       }
     } catch (error) {
-      console.error("Error creating doctor:", error);
+      // console.error("Error creating doctor:", error);
       setMessage({ type: "error", text: "Failed to create doctor" });
-      setTimeout(() => setMessage({ type: "", text: "" }), 3000);
+      // setTimeout(() => setMessage({ type: "", text: "" }), 3000);
     }
   };
 
    const handleLogout = async () => {
     try {
-      await axios.post("http://localhost:5000/logout",  {}, { withCredentials: true });
+      await axios.post(`${BASE_URL}/logout` ,{}, { withCredentials: true });
       setMessage({ type: "success", text: "Logged out successfully!" });
       
       setTimeout(() => {

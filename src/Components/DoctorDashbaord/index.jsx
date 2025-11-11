@@ -136,7 +136,7 @@ function Profile() {
       
       setShowCaseForm(false);
       setCaseForm({
-        patientId: "",
+        patientId: profile?.profile?._id,
         diagnosis: "",
         prescription: "",
         treatment: "",
