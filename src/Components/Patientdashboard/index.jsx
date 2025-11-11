@@ -90,19 +90,8 @@ useEffect(() => {
 }, []);
 
 
-  // Fetch Appointments
-  // const fetchAppointments = async (patientId) => {
-  //   try {
-  //     const res = await axios.get(
-  //       `http://localhost:5000/appointments/patient/${patientId}`
-  //     );
-  //           setAppointments(res?.data);
-  //   } catch (err) {
-  //     console.log(error)
-  //     console.error("Error fetching appointments:", err);
-  //   }
-  // };
 
+  
 
   const fetchAppointments = async (patientId) => {
   try {
@@ -110,53 +99,20 @@ useEffect(() => {
       withCredentials: true, // optional — agar cookies/session use ho raha hai
     });
     setAppointments(res.data);
+    console.log(res.data)
   } catch (err) {
     console.error("Error fetching appointments:", err);
   }
 };
-fetchAppointments(profile?.profile?._id)
+
+
+useEffect(() => {
+  if (profile?.profile?._id) {
+    fetchAppointments(profile.profile._id);
+  }
+}, [profile?.profile?._id]);
+
  
-  // Handle Appointment Booking
-  // const handleAppointment = async () => {
-  //   if (!selectedDoctor || !date || !time) {
-  //     setMessage({ type: "error", text: "Please fill all required fields!" });
-  //     return;
-  //   }
-
-  //   try {
-  //     setLoading(true);
-  //     const response = await fetch("http://localhost:5000/appointments", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({
-  //         doctorId: selectedDoctor,
-  //         patientId: profile?.profile?._id,
-  //         date,
-  //         time,
-  //         description,
-  //       }),
-  //     });
-
-  //     if (response.ok) {
-  //       setMessage({ type: "success", text: "Appointment booked successfully!" });
-  //       fetchAppointments(profile?.profile?._id);
-
-  //       setSelectedDoctor("");
-  //       setDate("");
-  //       setTime("");
-  //       setDescription("");
-
-  //       setTimeout(() => setMessage({ type: "", text: "" }), 3000);
-  //     } else {
-  //       const errorData = await response.json();
-  //       setMessage({ type: "error", text: errorData.message || "Error booking appointment" });
-  //     }
-  //   } catch (err) {
-  //     setMessage({ type: "error", text: "Error booking appointment" });
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
 
   const handleAppointment = async () => {
   if (!selectedDoctor || !date || !time) {
@@ -204,22 +160,6 @@ fetchAppointments(profile?.profile?._id)
   }
 };
   
-
-
-//   const handleLogout = async () => {
-//   try {
-//     await axios.post("http://localhost:5000/logout", {}, { withCredentials: true });
-//     setMessage({ type: "success", text: "Logged out successfully!" });
-    
-//     setTimeout(() => {
-//       navigate("/");
-//     }, 1500);
-
-//   } catch (err) {
-//     console.error("Error clearing cookie:", err);
-//   }
-// };
-  // console.log(appointments)
 
 
 const handleLogout = async () => {
