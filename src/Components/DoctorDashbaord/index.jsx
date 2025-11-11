@@ -99,14 +99,10 @@ function Profile() {
   };
 
   useEffect(() => {
-  if (showCaseRecords) {
-    fetchCaseRecords();
-  }
-}, [showCaseRecords]);
-
-
-  
-  
+    if (showCaseRecords) {
+      fetchCaseRecords();
+    }
+  }, [showCaseRecords]);
 
   const updateStatus = async (id, status) => {
     try {
@@ -182,12 +178,11 @@ function Profile() {
     }
   };
 
-
   useEffect(() => {
-  if (showCaseForm) {
-    fetchPatients();
-  }
-}, [showCaseForm]);
+    if (showCaseForm) {
+      fetchPatients();
+    }
+  }, [showCaseForm]);
 
   const handleAddCaseRecord = async (e) => {
     e.preventDefault();
@@ -831,9 +826,6 @@ function Profile() {
                         <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">
                           Status
                         </th>
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">
-                          Actions
-                        </th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100">
@@ -861,7 +853,11 @@ function Profile() {
                             <div className="flex items-center gap-2">
                               <Calendar className="w-4 h-4 text-gray-400" />
                               <span className="text-sm text-gray-600">
-                                {a.date}
+                                {new Date(a.date).toLocaleDateString("en-PK", {
+                                  day: "2-digit",
+                                  month: "short",
+                                  year: "numeric",
+                                })}
                               </span>
                             </div>
                           </td>
@@ -869,8 +865,16 @@ function Profile() {
                             <div className="flex items-center gap-2">
                               <Clock className="w-4 h-4 text-gray-400" />
                               <span className="text-sm text-gray-600">
-                                {a.time}
+                                {a.time.toLocaleString("en-PK", {
+                                  day: "2-digit",
+                                  month: "short",
+                                  year: "numeric",
+                                  hour: "2-digit",
+                                  minute: "2-digit",
+                                  hour12: true,
+                                })}
                               </span>
+                             
                             </div>
                           </td>
                           <td className="px-4 py-4">
