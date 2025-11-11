@@ -637,9 +637,6 @@ function AdminDashboard() {
                                 <p className="font-semibold text-gray-800">
                                   {pat.name || "Unknown"}
                                 </p>
-                                <p className="text-xs text-gray-500">
-                                  {pat.phone || "N/A"}
-                                </p>
                               </div>
                             </div>
                           </td>
@@ -730,6 +727,8 @@ function AdminDashboard() {
                               </div>
                               <p className="font-semibold text-gray-800">
                                 {a.patientId?.name || "Unknown Patient"}
+
+
                               </p>
                             </div>
                           </td>
