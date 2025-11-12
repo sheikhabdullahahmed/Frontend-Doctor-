@@ -32,7 +32,9 @@ function PatientProfile() {
 
   const navigate = useNavigate();
 
+  // const BASE_URL = "https://backend-doctor-production-1d4a.up.railway.app";
   const BASE_URL = "http://localhost:5000";
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,13 +45,13 @@ function PatientProfile() {
         });
         setProfile(resProfile.data);
 
-        console.log(resProfile.data);
+        // console.log(resProfile.data);
 
         // Doctors List
         const resDoctors = await axios.get(`${BASE_URL}/doctors`, {
           withCredentials: true,
         });
-        setDoctors(resDoctors.data);
+        setDoctors(resDoctors.data); 
       } catch (err) {
         setError(err.response?.data?.message || "Failed to load profile");
       }
@@ -67,7 +69,7 @@ function PatientProfile() {
         }
       );
       setAppointments(res.data);
-      console.log(res.data);
+      // console.log(res.data);
     } catch (err) {
       console.error("Error fetching appointments:", err);
     }

@@ -78,7 +78,8 @@ function Signup() {
     setIsLoading(true);
 
     try {
-      await axios.post("http://localhost:5000/signup", {
+      await axios.post("https://backend-doctor-production-1d4a.up.railway.app/signup",
+         {
         name,
         email,
         phone,

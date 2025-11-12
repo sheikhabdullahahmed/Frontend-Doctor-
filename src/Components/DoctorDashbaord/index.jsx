@@ -48,7 +48,7 @@ function Profile() {
   useEffect(() => {
     const fetchDoctorProfile = async () => {
       try {
-        const res = await fetch("http://localhost:5000/doctors/profile", {
+        const res = await fetch("https://backend-doctor-production-1d4a.up.railway.app/doctors/profile", {
           credentials: "include",
         });
         const data = await res.json();
