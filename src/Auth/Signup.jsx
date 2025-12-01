@@ -11,9 +11,8 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { Productionurl } from "../../production.js";
-// import { Localurl } from "../../production";
-
+// import {  Productionurl } from "../../production.js";
+import { Localurl } from "../../production";
 
 function Signup() {
   const [name, setName] = useState("");
@@ -51,54 +50,61 @@ function Signup() {
     }
 
     // ✅ Pakistani phone format check
-    const phoneRegex = /^03\d{2}-?\d{7}$/;
-    if (!phoneRegex.test(phone)) {
-      setMessage({
-        type: "error",
-        text: "Invalid phone number! Use format 03xx-xxxxxxx",
-      });
-      return false;
-    }
+    // const phoneRegex = /^03\d{2}-?\d{7}$/;
+    // if (!phoneRegex.test(phone)) {
+    //   setMessage({
+    //     type: "error",
+    //     text: "Invalid phone number! Use format 03xx-xxxxxxx",
+    //   });
+    //   return false;
+    // }
 
     // ✅ Password length check
-    if (password.length < 4) {
-      setMessage({
-        type: "error",
-        text: "Password must be at least 4 characters long.",
-      });
-      return false;
-    }
+    // if (password.length < 4) {
+    //   setMessage({
+    //     type: "error",
+    //     text: "Password must be at least 4 characters long.",
+    //   });
+    //   return false;
+    // }
 
     return true;
   };
 
- const handleSignup = async (e) => {
-  e.preventDefault(); // ✅ sahi spelling
+  const handleSignup = async (e) => {
+    e.preventDefault(); // ✅ sahi spelling
 
-  setMessage({type: "", text: ""})
+    setMessage({ type: "", text: "" });
 
-  if(!validateForm()) return;
+    if (!validateForm()) return;
 
-  setIsLoading(true)
+    setIsLoading(true);
 
-  try {
-    const res = await axios.post(`${Productionurl}/signup`, {
-      name, 
-      email,
-      phone,
-      password,
-    })
-    const data = res.data;
-    console.log("data is loading", data )
+    try {
+      const res = await axios.post(
+        `${Localurl}/api/signup`,
+        {
+          name,
+          email,
+          phone,
+          password,
+        },
+        { withCredentials: true }
+      );
+      const data = res.data;
+      console.log("data is loading", data);
 
-    setMessage({type: "success", text: "Signup Succesfully"})
-    setTimeout(() => navigate("/"), 1500)
-  }catch(err) {
-    setMessage({type:"error", text: err.response?.data?.message || "Signup failed Please try again" })
-  }finally {
-    setIsLoading(false)
-  }
- };
+      setMessage({ type: "success", text: "Signup Succesfully" });
+      setTimeout(() => navigate("/"), 1500);
+    } catch (err) {
+      setMessage({
+        type: "error",
+        text: err.response?.data?.message || "Signup failed Please try again",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">

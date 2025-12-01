@@ -9,8 +9,8 @@ import {
   EyeOff,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { Productionurl } from "../../production.js";
-// import { Localurl } from "../../production";
+// import { Productionurl } from "../../production.js";
+import { Localurl } from "../../production";
 
 
 function Login() {
@@ -32,7 +32,7 @@ function Login() {
     // 🔹 API call
     try {
       const res = await axios.post(
-        `${Productionurl}/login`,
+        `${Localurl}/api/login`,
         { email, password },
         { withCredentials: true } // important for cookies!
       );
