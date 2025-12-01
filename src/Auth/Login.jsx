@@ -1,8 +1,17 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { AlertCircle, CheckCircle2, Mail, Lock, Eye, EyeOff } from "lucide-react";
+import {
+  AlertCircle,
+  CheckCircle2,
+  Mail,
+  Lock,
+  Eye,
+  EyeOff,
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
+import { Productionurl } from "../../production.js";
+// import { Localurl } from "../../production";
+
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -11,67 +20,54 @@ function Login() {
   const [message, setMessage] = useState({ type: "", text: "" });
   const [isLoading, setIsLoading] = useState(false);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-    const handleLogin = async (e) => {
-      e.preventDefault();
-      setIsLoading(true);
-      setMessage({ type: "", text: "" });
+  // const BASE_URL = "https://backend-doctor-production-1d4a.up.railway.app";
 
-        // 🔹 API call
-       try {
-    const res = await axios.post(
-      "http://localhost:5000/login",
-      { email, password },
-      { withCredentials: true } // important for cookies!
-    );
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setMessage({ type: "", text: "" });
 
-        const {  user } = res.data; // assuming your backend returns {token, user}
-// const token=Cookies.get('token')
-//     const getCookie = (name) => {
-//         const value = `; ${document.cookie}`;
-//         const parts = value.split(`; ${name}=`);
-//         if (parts.length === 2) return parts.pop().split(';').shift();
-//         return null;
-//     };
-//     const username = getCookie("token");
-// console.log(username,"token")
+    // 🔹 API call
+    try {
+      const res = await axios.post(
+        `${Productionurl}/login`,
+        { email, password },
+        { withCredentials: true } // important for cookies!
+      );
 
-// return 
+      const { user } = res.data; // assuming your backend returns {token, user}
 
-        // // 🔹 Save token
-        // localStorage.setItem("token", token);
-        // localStorage.setItem("role", user.role);
+      setMessage({ type: "success", text: "Login successful! Redirecting..." });
 
-        setMessage({ type: "success", text: "Login successful! Redirecting..." });
-
-        // 🔹 Role-based redirect
-        setTimeout(() => {
-          if (user.role === "admin") {
-            navigate("/admin");
-          } else if (user.role === "doctor") {
-            navigate("/doctor");
-          } else if (user.role === "patient") {
-            navigate("/patient");
-          } else {
-            setMessage({
-              type: "error",
-              text: "Unknown role. Please contact admin.",
-            });
-          }
-        }, 1500);
-      } catch (err) {
-        console.error(err);
-        setMessage({
-          type: "error",
-          text:
-            err.response?.data?.message ||
-            "Invalid credentials. Please try again.",
-        });
-      } finally {
-        setIsLoading(false);
-      }
-    };
+      // 🔹 Role-based redirect
+      setTimeout(() => {
+        if (user.role === "admin") {
+          navigate("/admin");
+        } else if (user.role === "doctor") {
+          navigate("/doctor");
+        } else if (user.role === "patient") {
+          navigate("/patient");
+        } else {
+          setMessage({
+            type: "error",
+            text: "Unknown role. Please contact admin.",
+          });
+        }
+      }, 1500);
+    } catch (err) {
+      console.error(err);
+      setMessage({
+        type: "error",
+        text:
+          err.response?.data?.message ||
+          "Invalid credentials. Please try again.",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
@@ -80,7 +76,9 @@ function Login() {
           <div className="inline-block p-3 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full mb-4">
             <Lock className="w-8 h-8 text-white" />
           </div>
-          <h2 className="text-3xl font-bold text-gray-800 mb-2">Welcome Back</h2>
+          <h2 className="text-3xl font-bold text-gray-800 mb-2">
+            Welcome Back
+          </h2>
           <p className="text-gray-500 text-sm">
             Enter your credentials to access your account
           </p>

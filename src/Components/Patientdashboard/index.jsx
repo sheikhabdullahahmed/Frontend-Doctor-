@@ -41,8 +41,9 @@ function PatientProfile() {
       try {
         // Doctor Profile
         const resProfile = await axios.get(`${BASE_URL}/profile`, {
-          withCredentials: true, // send cookies automatically
+          withCredentials: true,
         });
+        console.log()
         setProfile(resProfile.data);
 
         // console.log(resProfile.data);

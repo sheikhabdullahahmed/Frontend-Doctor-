@@ -11,6 +11,9 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { Productionurl } from "../../production.js";
+// import { Localurl } from "../../production";
+
 
 function Signup() {
   const [name, setName] = useState("");
@@ -69,38 +72,33 @@ function Signup() {
     return true;
   };
 
-  const handleSignup = async (e) => {
-    e.preventDefault();
-    setMessage({ type: "", text: "" });
+ const handleSignup = async (e) => {
+  e.preventDefault(); // ✅ sahi spelling
 
-    if (!validateForm()) return;
+  setMessage({type: "", text: ""})
 
-    setIsLoading(true);
+  if(!validateForm()) return;
 
-    try {
-      await axios.post("https://backend-doctor-production-1d4a.up.railway.app/signup",
-         {
-        name,
-        email,
-        phone,
-        password,
-      });
+  setIsLoading(true)
 
-      setMessage({
-        type: "success",
-        text: "Signup successful! Redirecting...",
-      });
+  try {
+    const res = await axios.post(`${Productionurl}/signup`, {
+      name, 
+      email,
+      phone,
+      password,
+    })
+    const data = res.data;
+    console.log("data is loading", data )
 
-      setTimeout(() => navigate("/"), 1500);
-    } catch (err) {
-      setMessage({
-        type: "error",
-        text: err.response?.data?.message || "Signup failed! Please try again.",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    setMessage({type: "success", text: "Signup Succesfully"})
+    setTimeout(() => navigate("/"), 1500)
+  }catch(err) {
+    setMessage({type:"error", text: err.response?.data?.message || "Signup failed Please try again" })
+  }finally {
+    setIsLoading(false)
+  }
+ };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
