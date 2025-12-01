@@ -40,7 +40,7 @@ function PatientProfile() {
     const fetchData = async () => {
       try {
         // Doctor Profile
-        const resProfile = await axios.get(`${BASE_URL}/profile`, {
+        const resProfile = await axios.get(`${BASE_URL}/api/profile`, {
           withCredentials: true,
         });
         console.log()
