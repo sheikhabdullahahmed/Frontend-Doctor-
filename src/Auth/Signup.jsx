@@ -11,8 +11,8 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-// import {  Productionurl } from "../../production.js";
-import { Localurl } from "../../production";
+import {  Productionurl } from "../../production.js";
+// import { Localurl } from "../../production";
 
 function Signup() {
   const [name, setName] = useState("");
@@ -82,14 +82,14 @@ function Signup() {
 
     try {
       const res = await axios.post(
-        `${Localurl}/api/signup`,
+        `${Productionurl}/signup`,
         {
           name,
           email,
           phone,
           password,
         },
-        { withCredentials: true }
+        // { withCredentials: true }
       );
       const data = res.data;
       console.log("data is loading", data);
