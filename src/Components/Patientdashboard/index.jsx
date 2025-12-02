@@ -17,6 +17,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Productionurl } from "../../../production";
 
 function PatientProfile() {
   const [profile, setProfile] = useState(null);
@@ -33,14 +34,14 @@ function PatientProfile() {
   const navigate = useNavigate();
 
   // const BASE_URL = "https://backend-doctor-production-1d4a.up.railway.app";
-  const BASE_URL = "http://localhost:5000";
+  // const BASE_URL = "http://localhost:5000";
 
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Doctor Profile
-        const resProfile = await axios.get(`${BASE_URL}/profile`, {
+        const resProfile = await axios.get(`${Productionurl}/profile`, {
           withCredentials: true,
         });
         console.log()
