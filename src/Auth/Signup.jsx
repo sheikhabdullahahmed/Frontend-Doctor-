@@ -13,6 +13,7 @@ import {
 import { useNavigate } from "react-router-dom";
 // import {  Productionurl } from "../../production.js";
 // import { Localurl } from "../../production";
+const API = import.meta.env.VITE_LOCAL ;
 
 function Signup() {
   const [name, setName] = useState("");
@@ -43,11 +44,11 @@ function Signup() {
     }
 
     // ✅ Email format check
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setMessage({ type: "error", text: "Invalid email format!" });
-      return false;
-    }
+    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // if (!emailRegex.test(email)) {
+    //   setMessage({ type: "error", text: "Invalid email format!" });
+    //   return false;
+    // }
 
     // ✅ Pakistani phone format check
     // const phoneRegex = /^03\d{2}-?\d{7}$/;
@@ -82,7 +83,7 @@ function Signup() {
 
     try {
       const res = await axios.post(
-        `${process.env.PRODUCTION}/signup`,
+        `${API}/signup`,
         {
           name,
           email,
@@ -92,6 +93,7 @@ function Signup() {
         // { withCredentials: true }
       );
       const data = res.data;
+      console.log(res.data)
       console.log("data is loading", data);
 
       setMessage({ type: "success", text: "Signup Succesfully" });

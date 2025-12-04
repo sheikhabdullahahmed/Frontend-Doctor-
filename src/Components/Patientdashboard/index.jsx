@@ -17,7 +17,8 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Productionurl } from "../../../production";
+const API = import.meta.env.VITE_LOCAL;
+
 
 function PatientProfile() {
   const [profile, setProfile] = useState(null);
@@ -41,7 +42,7 @@ function PatientProfile() {
     const fetchData = async () => {
       try {
         // Doctor Profile
-        const resProfile = await axios.get(`${Productionurl}/profile`, {
+        const resProfile = await axios.get(`${API}/profile`, {
           withCredentials: true,
         });
         setProfile(resProfile.data);
@@ -49,7 +50,7 @@ function PatientProfile() {
         // console.log(resProfile.data);
 
         // Doctors List
-        const resDoctors = await axios.get(`${Productionurl}/doctors`, {
+        const resDoctors = await axios.get(`${API}/doctors`, {
           withCredentials: true,
         });
         setDoctors(resDoctors.data); 
@@ -64,7 +65,7 @@ function PatientProfile() {
   const fetchAppointments = async (patientId) => {
     try {
       const res = await axios.get(
-        `${Productionurl}/appointments/patient/${patientId}`,
+        `${API}/appointments/patient/${patientId}`,
         {
           withCredentials: true, // optional — agar cookies/session use ho raha hai
         }
@@ -90,7 +91,7 @@ function PatientProfile() {
 
     try {
       setLoading(true);
-      const response = await fetch(`${Productionurl}/appointments`, {
+      const response = await fetch(`${API}/appointments`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include", // send cookies/session info
@@ -133,7 +134,7 @@ function PatientProfile() {
 
   const handleLogout = async () => {
     try {
-      await axios.post(`${Productionurl}/logout`, {}, { withCredentials: true });
+      await axios.post(`${API}/logout`, {}, { withCredentials: true });
       setMessage({ type: "success", text: "Logged out successfully!" });
 
       setTimeout(() => {

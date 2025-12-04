@@ -9,9 +9,7 @@ import {
   EyeOff,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-// import { Productionurl } from "../../production.js";
-// import { Productionurl } from "../../production";
-
+const API = import.meta.env.VITE_LOCAL;
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -22,8 +20,6 @@ function Login() {
 
   const navigate = useNavigate();
 
-  // const BASE_URL = "https://backend-doctor-production-1d4a.up.railway.app";
-
   const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -32,12 +28,12 @@ function Login() {
     // 🔹 API call
     try {
       const res = await axios.post(
-        `${process.env.PRODUCTION}/login`,
+        `${API}/login`,
         { email, password },
         { withCredentials: true } // important for cookies!
       );
 
-      const { user } = res.data; // assuming your backend returns {token, user}
+      const { user } = res.data; // assuming 
 
       setMessage({ type: "success", text: "Login successful! Redirecting..." });
 
