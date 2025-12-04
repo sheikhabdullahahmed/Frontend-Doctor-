@@ -11,7 +11,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import {  Productionurl } from "../../production.js";
+// import {  Productionurl } from "../../production.js";
 // import { Localurl } from "../../production";
 
 function Signup() {
@@ -82,7 +82,7 @@ function Signup() {
 
     try {
       const res = await axios.post(
-        `${Productionurl}/signup`,
+        `${process.env.PRODUCTION}/signup`,
         {
           name,
           email,
