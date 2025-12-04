@@ -44,13 +44,12 @@ function PatientProfile() {
         const resProfile = await axios.get(`${Productionurl}/profile`, {
           withCredentials: true,
         });
-        console.log()
         setProfile(resProfile.data);
 
         // console.log(resProfile.data);
 
         // Doctors List
-        const resDoctors = await axios.get(`${BASE_URL}/doctors`, {
+        const resDoctors = await axios.get(`${Productionurl}/doctors`, {
           withCredentials: true,
         });
         setDoctors(resDoctors.data); 
@@ -65,7 +64,7 @@ function PatientProfile() {
   const fetchAppointments = async (patientId) => {
     try {
       const res = await axios.get(
-        `${BASE_URL}/appointments/patient/${patientId}`,
+        `${Productionurl}/appointments/patient/${patientId}`,
         {
           withCredentials: true, // optional — agar cookies/session use ho raha hai
         }
@@ -91,7 +90,7 @@ function PatientProfile() {
 
     try {
       setLoading(true);
-      const response = await fetch(`${BASE_URL}/appointments`, {
+      const response = await fetch(`${Productionurl}/appointments`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include", // send cookies/session info
@@ -134,7 +133,7 @@ function PatientProfile() {
 
   const handleLogout = async () => {
     try {
-      await axios.post(`${BASE_URL}/logout`, {}, { withCredentials: true });
+      await axios.post(`${Productionurl}/logout`, {}, { withCredentials: true });
       setMessage({ type: "success", text: "Logged out successfully!" });
 
       setTimeout(() => {
