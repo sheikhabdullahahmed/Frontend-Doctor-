@@ -9,7 +9,9 @@ import {
   EyeOff,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-const API = import.meta.env.VITE_LOCAL;
+// const API = import.meta.env.VITE_LOCAL;
+const Api = import.meta.env.VITE_PRODUCTIN
+
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -28,9 +30,9 @@ function Login() {
     // 🔹 API call
     try {
       const res = await axios.post(
-        `${API}/login`,
+        `${Api}/login`,
         { email, password },
-        { withCredentials: true } // important for cookies!
+        { withCredentials: true} // important for cookies!
       );
 
       const { user } = res.data; // assuming 

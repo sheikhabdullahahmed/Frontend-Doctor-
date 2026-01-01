@@ -13,7 +13,9 @@ import {
 import { useNavigate } from "react-router-dom";
 // import {  Productionurl } from "../../production.js";
 // import { Localurl } from "../../production";
-const API = import.meta.env.VITE_LOCAL ;
+// const API = import.meta.env.VITE_LOCAL;
+const Api = import.meta.env.VITE_PRODUCTIN
+
 
 function Signup() {
   const [name, setName] = useState("");
@@ -83,14 +85,14 @@ function Signup() {
 
     try {
       const res = await axios.post(
-        `${API}/signup`,
+        `${Api}/signup`,
         {
           name,
           email,
           phone,
           password,
         },
-        // { withCredentials: true }
+        { withCredentials: true }
       );
       const data = res.data;
       console.log(res.data)

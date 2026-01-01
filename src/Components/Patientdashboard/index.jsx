@@ -17,8 +17,9 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-const API = import.meta.env.VITE_LOCAL;
+// const Api = import.meta.env.VITE_LOCAL;
 
+const Api = import.meta.env.VITE_PRODUCTIN
 
 function PatientProfile() {
   const [profile, setProfile] = useState(null);
@@ -42,7 +43,7 @@ function PatientProfile() {
     const fetchData = async () => {
       try {
         // Doctor Profile
-        const resProfile = await axios.get(`${API}/profile`, {
+        const resProfile = await axios.get(`${Api}/profile`, {
           withCredentials: true,
         });
         setProfile(resProfile.data);
@@ -50,7 +51,7 @@ function PatientProfile() {
         // console.log(resProfile.data);
 
         // Doctors List
-        const resDoctors = await axios.get(`${API}/doctors`, {
+        const resDoctors = await axios.get(`${Api}/doctors`, {
           withCredentials: true,
         });
         setDoctors(resDoctors.data); 
@@ -65,7 +66,7 @@ function PatientProfile() {
   const fetchAppointments = async (patientId) => {
     try {
       const res = await axios.get(
-        `${API}/appointments/patient/${patientId}`,
+        `${Api}/appointments/patient/${patientId}`,
         {
           withCredentials: true, // optional — agar cookies/session use ho raha hai
         }
@@ -91,7 +92,7 @@ function PatientProfile() {
 
     try {
       setLoading(true);
-      const response = await fetch(`${API}/appointments`, {
+      const response = await fetch(`${Api}/appointments`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include", // send cookies/session info
@@ -134,7 +135,7 @@ function PatientProfile() {
 
   const handleLogout = async () => {
     try {
-      await axios.post(`${API}/logout`, {}, { withCredentials: true });
+      await axios.post(`${Api}/logout`, {}, { withCredentials: true });
       setMessage({ type: "success", text: "Logged out successfully!" });
 
       setTimeout(() => {
